@@ -148,3 +148,13 @@ func (auth *Authentication) UpdateBy(attributes map[string]interface{}) error {
 
 	return nil
 }
+
+func (auth *Authentication) ToEmailNotificationInfo(previousStatus string) *EmailNotificationInfo {
+	return &EmailNotificationInfo{
+		ResourceDisplayName:        "Authentication",
+		CurrentAvailabilityStatus:  auth.AvailabilityStatus.AvailabilityStatus,
+		PreviousAvailabilityStatus: previousStatus,
+		SourceName:                 auth.Source.Name,
+		SourceID:                   strconv.FormatInt(auth.SourceID, 10),
+	}
+}

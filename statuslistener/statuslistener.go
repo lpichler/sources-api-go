@@ -1,6 +1,7 @@
 package statuslistener
 
 import (
+	"github.com/RedHatInsights/sources-api-go/service"
 	"sort"
 	"strings"
 	"time"
@@ -116,9 +117,26 @@ func (avs *AvailabilityStatusListener) processEvent(statusMessage types.StatusMe
 		return
 	}
 
+	previousStatus, err := dao.GetAvailabilityStatusFromStatusMessage(tenant.Id, statusMessage.ResourceID, statusMessage.ResourceType)
+	if err != nil {
+		l.Log.Errorf("unable to get status availability: %s", err)
+		return
+	}
+
 	resource.TenantID = tenant.Id
 	resource.AccountNumber = tenant.ExternalTenant
-	err = (*modelEventDao).FetchAndUpdateBy(*resource, updateAttributes)
+	resultRecord, err := (*modelEventDao).FetchAndUpdateBy(*resource, updateAttributes)
+	if err != nil {
+		l.Log.Errorf("unable to update availability status: %s", err)
+		return
+	}
+
+	if previousStatus != statusMessage.Status {
+		emailInfo := service.EmailNotificationInfoFromResource(resultRecord, previousStatus)
+		if emailInfo != nil {
+			service.EmitAvailabilityStatusNotification(accountNumber, emailInfo)
+		}
+	}
 
 	if err != nil {
 		l.Log.Errorf("Update error in status availability: %s", err)

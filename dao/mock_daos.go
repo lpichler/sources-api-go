@@ -148,8 +148,8 @@ func (m *MockSourceDao) BulkMessage(_ util.Resource) (map[string]interface{}, er
 	return nil, nil
 }
 
-func (m *MockSourceDao) FetchAndUpdateBy(_ util.Resource, _ map[string]interface{}) error {
-	return nil
+func (m *MockSourceDao) FetchAndUpdateBy(_ util.Resource, _ map[string]interface{}) (interface{}, error) {
+	return nil, nil
 }
 
 func (m *MockSourceDao) ToEventJSON(_ util.Resource) ([]byte, error) {
@@ -379,8 +379,8 @@ func (m *MockApplicationDao) BulkMessage(_ util.Resource) (map[string]interface{
 	return nil, nil
 }
 
-func (m *MockApplicationDao) FetchAndUpdateBy(_ util.Resource, _ map[string]interface{}) error {
-	return nil
+func (m *MockApplicationDao) FetchAndUpdateBy(_ util.Resource, _ map[string]interface{}) (interface{}, error) {
+	return nil, nil
 }
 
 func (m *MockApplicationDao) ToEventJSON(_ util.Resource) ([]byte, error) {
@@ -468,8 +468,8 @@ func (m *MockEndpointDao) BulkMessage(_ util.Resource) (map[string]interface{}, 
 	return nil, nil
 }
 
-func (m *MockEndpointDao) FetchAndUpdateBy(_ util.Resource, _ map[string]interface{}) error {
-	return nil
+func (m *MockEndpointDao) FetchAndUpdateBy(_ util.Resource, _ map[string]interface{}) (interface{}, error) {
+	return nil, nil
 }
 
 func (m *MockEndpointDao) ToEventJSON(_ util.Resource) ([]byte, error) {
@@ -663,7 +663,7 @@ func (m MockAuthenticationDao) BulkMessage(resource util.Resource) (map[string]i
 	panic("implement me")
 }
 
-func (m MockAuthenticationDao) FetchAndUpdateBy(resource util.Resource, updateAttributes map[string]interface{}) error {
+func (m MockAuthenticationDao) FetchAndUpdateBy(resource util.Resource, updateAttributes map[string]interface{}) (interface{}, error) {
 	panic("implement me")
 }
 

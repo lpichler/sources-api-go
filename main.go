@@ -24,6 +24,7 @@ func main() {
 	jobs.Init()
 
 	if config.Get().StatusListener {
+		dao.GetMarketplaceTokenCacher = dao.GetMarketplaceTokenCacherWithTenantId
 		statuslistener.Run()
 	} else {
 		runServer()
