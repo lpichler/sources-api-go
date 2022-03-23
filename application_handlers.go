@@ -156,12 +156,14 @@ func ApplicationEdit(c echo.Context) error {
 		return err
 	}
 
+	previousStatus := app.AvailabilityStatus.AvailabilityStatus
 	app.UpdateFromRequest(input)
 	err = applicationDB.Update(app)
 	if err != nil {
 		return err
 	}
 
+	setNotificationForAvailabilityStatus(c, previousStatus, app)
 	setEventStreamResource(c, app)
 
 	// for this model we ONLY raise the update for superkey sources once the

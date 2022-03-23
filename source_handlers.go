@@ -149,12 +149,14 @@ func SourceEdit(c echo.Context) error {
 		return err
 	}
 
+	previousStatus := s.AvailabilityStatus.AvailabilityStatus
 	s.UpdateFromRequest(input)
 	err = sourcesDB.Update(s)
 	if err != nil {
 		return err
 	}
 
+	setNotificationForAvailabilityStatus(c, previousStatus, s)
 	setEventStreamResource(c, s)
 	return c.JSON(http.StatusOK, s.ToResponse())
 }

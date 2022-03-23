@@ -63,3 +63,11 @@ func (r *RhcConnection) ToResponse() *RhcConnectionResponse {
 		SourceIds:               sourceIds,
 	}
 }
+
+func (r *RhcConnection) ToEmailNotificationInfo(previousStatus string) *EmailNotificationInfo {
+	return &EmailNotificationInfo{
+		ResourceDisplayName:        "RHC Connection",
+		CurrentAvailabilityStatus:  r.AvailabilityStatus.AvailabilityStatus,
+		PreviousAvailabilityStatus: previousStatus,
+	}
+}

@@ -1,6 +1,12 @@
 package model
 
-import "time"
+import (
+	"time"
+)
+
+type EmailNotificationInfoInterface interface {
+	ToEmailNotificationInfo(previousStatus string) *EmailNotificationInfo
+}
 
 type Pause struct {
 	PausedAt time.Time `json:"paused_at,omitempty"`

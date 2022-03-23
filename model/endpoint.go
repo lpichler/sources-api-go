@@ -89,3 +89,13 @@ func (endpoint *Endpoint) ToResponse() *EndpointResponse {
 		SourceID:                   sourceId,
 	}
 }
+
+func (endpoint *Endpoint) ToEmailNotificationInfo(previousStatus string) *EmailNotificationInfo {
+	return &EmailNotificationInfo{
+		SourceID:                   strconv.FormatInt(endpoint.SourceID, 10),
+		SourceName:                 endpoint.Source.Name,
+		ResourceDisplayName:        "Endpoint",
+		CurrentAvailabilityStatus:  endpoint.AvailabilityStatus.AvailabilityStatus,
+		PreviousAvailabilityStatus: previousStatus,
+	}
+}

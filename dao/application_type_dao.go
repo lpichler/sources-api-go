@@ -104,7 +104,7 @@ func (a *applicationTypeDaoImpl) Delete(_ *int64) error {
 	panic("not needed (yet) due to seeding.")
 }
 
-func (at *applicationTypeDaoImpl) ApplicationTypeCompatibleWithSource(typeId, sourceId int64) error {
+func (a *applicationTypeDaoImpl) ApplicationTypeCompatibleWithSource(typeId, sourceId int64) error {
 	source := m.Source{ID: sourceId}
 	result := DB.Preload("SourceType").Find(&source)
 	if result.Error != nil {

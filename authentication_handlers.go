@@ -116,12 +116,14 @@ func AuthenticationUpdate(c echo.Context) error {
 		return err
 	}
 
+	previousStatus := auth.AvailabilityStatus.AvailabilityStatus
 	auth.UpdateFromRequest(updateRequest)
 	err = authDao.Update(auth)
 	if err != nil {
 		return util.NewErrBadRequest(err)
 	}
 
+	setNotificationForAvailabilityStatus(c, previousStatus, auth)
 	setEventStreamResource(c, auth)
 	return c.JSON(http.StatusOK, auth.ToResponse())
 }
